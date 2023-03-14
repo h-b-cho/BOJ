@@ -1,29 +1,26 @@
 N, r, c = map(int, input().split())
-
-ans = 0
+cnt = 0
 
 while N != 0:
+    N -= 1
+    quarter = 2**N
 
-	N -= 1
+    if r < quarter and c < quarter:
+        cnt += quarter*quarter*0
 
-	# 1사분면
-	if r < 2 ** N and c < 2 ** N:
-		ans += ( 2 ** N ) * ( 2 ** N ) * 0
+    # 2사분면
+    elif r < quarter and c >= quarter:
+        cnt += quarter*quarter*1
+        c -= (quarter)
 
-	# 2사분면
-	elif r < 2 ** N and c >= 2 ** N: 
-		ans += ( 2 ** N ) * ( 2 ** N ) * 1
-		c -= ( 2 ** N )
-        
-	# 3사분면    
-	elif r >= 2 ** N and c < 2 ** N: 
-		ans += ( 2 ** N ) * ( 2 ** N ) * 2
-		r -= ( 2 ** N )
-        
-	# 4사분면    
-	else:
-		ans += ( 2 ** N ) * ( 2 ** N ) * 3
-		r -= ( 2 ** N )
-		c -= ( 2 ** N )
-    
-print(ans)
+    # 3사분면
+    elif r >= quarter and c < quarter:
+        cnt += quarter*quarter*2
+        r -= (quarter)
+
+    # 4사분면
+    else:
+        cnt += quarter*quarter*3
+        r -= (quarter)
+        c -= (quarter)
+print(cnt)
