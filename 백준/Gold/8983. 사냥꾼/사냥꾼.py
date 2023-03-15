@@ -20,8 +20,8 @@ for a, b in animals:
             start = mid+1
         else:
             end = mid
-            
-    if abs(shots[end]-a)+b<=L or abs(shots[end-1]-a)+b<=L:
+
+    if abs(shots[end]-a)+b<=L:
         cnt += 1
 
 print(cnt)
