@@ -1,26 +1,23 @@
-def dfs():
-    import sys
-    from itertools import permutations
-    input = sys.stdin.readline
-    N = int(input())
-    W = list(list(map(int, input().split())) for _ in range(N))
-    cities = list(permutations(range(N)))
-    currMin = 1e9
+import sys
+input = sys.stdin.readline
+N = int(input())
+W = list(list(map(int, input().split())) for _ in range(N))
+currMin = 1e9
+visited = [0]*N
 
-    for city in cities:
-        sum = 0
-        flag = True
-        if W[city[-1]][city[0]] == 0:
-            continue
-        for i in range(N-1):
-            if W[city[i]][city[i+1]]==0:
-                flag = False
-                break
-            sum += W[city[i]][city[i+1]]
-        # if not flag:
-        #     continue 
-        if flag:
-            sum += W[city[-1]][city[0]]
-            currMin = min(sum, currMin)
-    print(currMin)
-dfs()
+def dfs(depth, current, sum):
+    global currMin
+    if depth==N-1 and W[current][0]!=0:
+        sum+=W[current][0]
+        if sum<currMin:
+            currMin = sum
+        return
+    for i in range(N):
+        if visited[i]==0 and W[current][i]!=0:
+            visited[i] = 1
+            dfs(depth+1, i, sum+W[current][i])
+            visited[i] = 0
+
+visited[0] = 1
+dfs(0, 0, 0)
+print(currMin)
