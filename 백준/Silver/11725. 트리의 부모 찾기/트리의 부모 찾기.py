@@ -1,5 +1,5 @@
 import sys
-sys.setrecursionlimit(10**6)
+from collections import deque
 input = sys.stdin.readline
 N = int(input())
 
@@ -10,12 +10,16 @@ for _ in range(N-1):
     graph[b].append(a)
 
 parent = [int(0) for _ in range(N+1)]
+q = deque([1])
 
-def dfs(n):
-    for i in graph[n]:
-        if parent[i]==int(0):
-            parent[i] = n
-            dfs(i)
+def bfs():
+    while q:
+        curr = q.popleft()
+        # if parent[curr[0]]==0:
+        for curr_adjacent in graph[curr]:
+            if parent[curr_adjacent]==0:
+                parent[curr_adjacent] = curr
+                q.append(curr_adjacent)
 
-dfs(1)
-for j in range(2, N+1): print(parent[j])
+bfs()
+for x in parent[2:]: print(x)
